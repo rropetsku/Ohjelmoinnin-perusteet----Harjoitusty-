@@ -14,51 +14,45 @@ public class Hirsipuu {
     public static void paaValikko(){
     	int valinta = 0;
     	try {
-    	System.out.println("Tervetuloa!");
-    	System.out.println("Valitse vaihtoehto:"
-    			+ "1) Yksinpeli"
-    			+ "2) Pelaaja vs Kone"
-    			+ "3) Ohjeet"
-    			+ "4) Lopeta");
-    	valinta = lukija.nextInt();
-    	if (valinta == (1 | 2 | 3 | 4)) {
+    		System.out.println("Tervetuloa!");
+    		System.out.println("Valitse vaihtoehto:"
+    				+ " 1) Yksinpeli "
+    				+ "2) Pelaaja vs Kone "
+    				+ "3) Ohjeet "
+    				+ "4) Lopeta");
     		valinta = lukija.nextInt();
-    	}
-    } catch (Exception e) {
-    	System.out.println("Tarkista että syötteesi on 1,2,3 tai 4");
-    	paaValikko();
+    		if (valinta == (1 | 2 | 3 | 4)) {
+    			valinta = lukija.nextInt();
+    		}
+    	} catch (Exception e) {
+    		System.out.println("Tarkista että syötteesi on 1,2,3 tai 4");
+    		paaValikko();
   
-    } 	if (valinta == 1) {
+    	}if (valinta == 1) {
     		yksinPeli();
-    	}if ( valinta == 2) {
-    		pelaajaVsKone();
-    	}if (valinta == 3) {
-    		int valmis;
-    	//ohjeetLuku = tekstitiedosto jossa ohjeet
-    		try {
-    			File tiedosto = new File("ohjeetLuku.txt");
-    			Scanner scan = new Scanner(tiedosto);
+    		}if ( valinta == 2) {
+    			pelaajaVsKone();
+    			}if (valinta == 3) {
+    				int valmis;
+    		//ohjeetLuku = tekstitiedosto jossa ohjeet
+    	try {
+    		File tiedosto = new File("ohjeetLuku.txt");
+    		Scanner scan = new Scanner(tiedosto);
     			//tulosta ohjeet
     			while(scan.hasNextLine()) {
     				System.out.println(scan.nextLine());
-    			}
-    			//pyytää lukua 1 kun ohjeet luettu, 
-    			//jolla pääsee takaisin päävalikkoon
-    			valmis = lukija.nextInt();
+    		}
+    		//pyytää lukua 1 kun ohjeet luettu, 
+    		//jolla pääsee takaisin päävalikkoon
+    		valmis = lukija.nextInt();
     			if (valmis == 1) {
     				paaValikko();
     			}
-    	} catch (Exception a) {
+    	}catch (Exception a) {
     		System.out.println("Virhe havaittu poistutaan päävalikkoon");
     		paaValikko();
     		
     	}
-    	
-    		//Syötä 1, kun valmis:
-    		//kunnes valmis = 1
-    		//aseta valmis = käyttäjän syöttämä luku
-    		//POIKKEUS
-    		//kutsu päävalikko 
     	} if (valinta == 4) {
     		System.out.println("Näkemiin");
     	}
