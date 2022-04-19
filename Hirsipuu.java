@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -6,9 +7,61 @@ public class Hirsipuu {
 	
     //K√§ynnist√§√§ paaValikko-metodin
     public static void main(String args[]){
+    	paaValikko();
+    	
     }
     //Antaa k√§ytt√§j√§n valita yksinPeli- ja pelaajaVsKone-metodin, ohjeiden ja lopetuksen v√§lill√§
     public static void paaValikko(){
+    	int valinta = 0;
+    	try {
+    	System.out.println("Tervetuloa!");
+    	System.out.println("Valitse vaihtoehto:"
+    			+ "1) Yksinpeli"
+    			+ "2) Pelaaja vs Kone"
+    			+ "3) Ohjeet"
+    			+ "4) Lopeta");
+    	valinta = lukija.nextInt();
+    	if (valinta == (1 | 2 | 3 | 4)) {
+    		valinta = lukija.nextInt();
+    	}
+    } catch (Exception e) {
+    	System.out.println("Tarkista ett‰ syˆtteesi on 1,2,3 tai 4");
+    	paaValikko();
+  
+    } 	if (valinta == 1) {
+    		yksinPeli();
+    	}if ( valinta == 2) {
+    		pelaajaVsKone();
+    	}if (valinta == 3) {
+    		int valmis;
+    	//ohjeetLuku = tekstitiedosto jossa ohjeet
+    		try {
+    			File tiedosto = new File("ohjeetLuku.txt");
+    			Scanner scan = new Scanner(tiedosto);
+    			//tulosta ohjeet
+    			while(scan.hasNextLine()) {
+    				System.out.println(scan.nextLine());
+    			}
+    			//pyyt‰‰ lukua 1 kun ohjeet luettu, 
+    			//jolla p‰‰see takaisin p‰‰valikkoon
+    			valmis = lukija.nextInt();
+    			if (valmis == 1) {
+    				paaValikko();
+    			}
+    	} catch (Exception a) {
+    		System.out.println("Virhe havaittu poistutaan p‰‰valikkoon");
+    		paaValikko();
+    		
+    	}
+    	
+    		//Syˆt‰ 1, kun valmis:
+    		//kunnes valmis = 1
+    		//aseta valmis = k‰ytt‰j‰n syˆtt‰m‰ luku
+    		//POIKKEUS
+    		//kutsu p‰‰valikko 
+    	} if (valinta == 4) {
+    		System.out.println("N‰kemiin");
+    	}
     }
     //Pelaaja pelaa yksin hirsipuuta
     public static void yksinPeli(){
@@ -85,6 +138,14 @@ public class Hirsipuu {
     }
     //Palauttaa boolean arvon sen mukaan onko arvattuKirjain sanassa
     public static boolean onkoKirjainSanassa(String sana,char arvattuKirjain){
+    	boolean loytyy = false;
+    	//toistetaan sana-muuttujan pituuden verran
+    	for (int i = 0; i < sana.length(); i++) {
+    		if(sana.charAt(i) == arvattuKirjain) {
+    			loytyy = true;
+    		}
+    	}
+    	return loytyy;
     }
     //Vaihtaa sanaTulosteeseen arvattuKirjain-arvon indekseihin, jossa sana-merkkijonossa l√∂ytyy kyseinen merkki 
     public static paljastaKirjaimet(String sana,String sanaTuloste,char arvattuKirjain){

@@ -1,0 +1,17 @@
+Pelataan hirsipuu pelia!
+Arvattava sana naytetaan pelaajalle tahtimerkeilla *, joiden lukumaara vastaa 
+sanan kirjainten lukumaaraa. Jos arvaava pelaaja ehdottaa kirjainta, koka esiintyy sanassa,
+kirjoittaja kirjoittaa sen kaikkiin niihin kohtiin, joissa se sana esiintyy. Jos ehdotettu
+kirjain ei esiinny sanassa, piirretaan yksi kuvio elementtiin. Peli paattyy kun arvaava pelaaja
+saa sanan valmiiksi, eli ehdottaa jokaista sanassa esiintyvaa kirjainta tai arvaa koko sanan oikein.
+Toinen on kun pelaaja saa piirrettya loppuun hirsippuussa roikkuvan tikku-ukkohahmon.
+
+Pelaaja vs Kone pelissa, ensin pelaaja aloittaa arvaamalla sanoja, niin kauan kunnes pelaaja arvaa 
+sanan oikein tai hirsipuussa roikkuva tikku-ukkohahmo on piirretty loppuun. Taman jalkeen kone pelaa
+samaisen pelin, arvaten kirjaimmia niin kauan kun sana on arvattu tai hirsipuu on piirretty, se kumpi
+arvaa sanan nopeiten oikein ilman, etta hirsipuu on piirretty loppuun voittaa. Jos taas kumpikaan ei 
+arvaa sanaa ennen, kuin hirsipuu on piirretty kumpikaan ei voita. Jos kummatkin koneja pelaaja arvaavat
+sanan oikein katsotaan kummalla on vahemman arvauksia voittaa.
+
+
+Syota numero 1 kun valmis.
