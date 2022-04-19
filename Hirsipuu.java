@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Hirsipuu {
@@ -12,7 +13,7 @@ public class Hirsipuu {
     //Pelaaja pelaa yksin hirsipuuta
     public static void yksinPeli(){
     	String sana = arvattavaSana();
-    	String sanaTuloste;
+    	String sanaTuloste = "";
     	int kierrosLaskuri = 0;
     	int hirsipuunTila = 0;
     	
@@ -24,7 +25,53 @@ public class Hirsipuu {
     		kierrosLaskuri += 1;
     		System.out.println(sanaTuloste);
     		System.out.println("Arvaa kirjain: ");
-    		String arvattuKirjain = lukija.nextLine();
+    		char arvattuKirjain = lukija.next().charAt(0);
+    		try {
+    			sanaTuloste = paljastaKirjaimet(sana, sanaTuloste, arvattuKirjain);
+    			if (onkoKirjainSanassa(sana, arvattuKirjain) == false) {
+    				System.out.println("Kirjainta ei löydy.");
+    				hirsipuunTila+=1;
+        			if (hirsipuunTila == 8) {
+        				System.out.println("Hävisit!");
+        				paaValikko();
+        			}
+    			}
+    			if (onkoKirjainSanassa(sana, arvattuKirjain) == true) {
+    				System.out.println("Oikein, haluatko arvata sanaa? 1) Kyllä 2) En");
+    				int arvaatko;
+    				try {
+    				do {
+    					arvaatko = lukija.nextInt();
+    					if (arvaatko == 1) {
+    						System.out.println("Kirjoita sana: ");
+    						String sanaArvaus = lukija.nextLine();
+    						if (sanaArvaus==sana) {
+    							System.out.println("Voitit!");
+    							try {
+    								//String tulosTiedosto;
+    								PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
+    								//Mikä on tiedostoon kirjoitettava tulosrivi?
+    								kirjoittaja.println();
+    							} catch (Exception e) {
+    								System.out.println("Tuloksia ei voida tallentaa");
+    								paaValikko();
+    							}
+    						}
+    					}
+    					if (arvaatko == 2) {
+    						break;
+    					}
+    				} while (arvaatko == 1 || arvaatko == 2);
+    			} catch (Exception e) {
+    				System.out.println("Syötteessä havaittu virhe");
+    				paaValikko();
+    			}
+    			}
+    		} catch (Exception e) {
+    			System.out.println("Virhe, palataan päävalikkoon.");
+    			paaValikko();
+    		}
+    	
     	}
 
     }
