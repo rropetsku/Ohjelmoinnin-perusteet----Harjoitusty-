@@ -48,9 +48,8 @@ public class Hirsipuu {
     						if (sanaArvaus==sana) {
     							System.out.println("Voitit!");
     							try {
-    								//String tulosTiedosto;
     								PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
-    								//Mikä on tiedostoon kirjoitettava tulosrivi?
+//Mikä on tiedostoon kirjoitettava tulosrivi? Kierroslaskuri? Sana?
     								kirjoittaja.println();
     							} catch (Exception e) {
     								System.out.println("Tuloksia ei voida tallentaa");
