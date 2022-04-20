@@ -14,12 +14,7 @@ public class Hirsipuu {
     }
     //Antaa kayttajan valita yksinPeli- ja pelaajaVsKone-metodin, ohjeiden ja lopetuksen valilla
     public static void paaValikko(){
-		if(System.getProperty("os.name").contains("Windows")){
-			try{
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
-			}catch(Exception e){}
-		}
-		System.out.println("\033[H\033[2J");
+		tyhjennaNaytto();
     	int valinta = 0;
     	try {
     		System.out.println("Tervetuloa!");
@@ -57,7 +52,7 @@ public class Hirsipuu {
 			do{
 				valmis = lukija.nextInt();
     			if (valmis == 1) {
-					System.out.println("\033[H\033[2J");
+					tyhjennaNaytto();
     				paaValikko();
     			}
 			}while(valmis != 1);
