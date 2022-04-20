@@ -82,12 +82,7 @@ public class Hirsipuu {
     			sanaTuloste += "*";
     		}
     	while(hirsipuunTila <= 9) {
-			if(System.getProperty("os.name").contains("Windows")){
-				try{
-					new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
-				}catch(Exception e){}
-			}
-			System.out.println("\033[H\033[2J");
+			tyhjennaNaytto();
     		hirsipuunTulostus(hirsipuunTila);
     		kierrosLaskuri += 1;
     		System.out.println(sanaTuloste);
@@ -100,12 +95,7 @@ public class Hirsipuu {
     				System.out.println("Kirjainta ei loydy.");
     				hirsipuunTila+=1;
         			if (hirsipuunTila == 9) {
-						if(System.getProperty("os.name").contains("Windows")){
-							try{
-								new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
-							}catch(Exception e){}
-						}
-						System.out.println("\033[H\033[2J");
+						tyhjennaNaytto();
 						hirsipuunTulostus(hirsipuunTila);
 						System.out.println("Havisit!");
 						do{
@@ -113,12 +103,7 @@ public class Hirsipuu {
 							valikkoon = lukija.nextInt();
 						}while(valikkoon != 1);
 						if(valikkoon == 1){
-							if(System.getProperty("os.name").contains("Windows")){
-								try{
-									new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
-								}catch(Exception e){}
-							}
-							System.out.println("\033[H\033[2J");
+							tyhjennaNaytto();
 							paaValikko();
 						}
 						break;
@@ -140,7 +125,6 @@ public class Hirsipuu {
     							System.out.println("Voitit!");
     							try {
     								PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
-//Mika on tiedostoon kirjoitettava tulosrivi? Kierroslaskuri? Sana?
     								kirjoittaja.println();
     							} catch (Exception e) {
     								System.out.println("Tuloksia ei voida tallentaa");
@@ -152,12 +136,7 @@ public class Hirsipuu {
 									valikkoon = lukija.nextInt();
 								}while(valikkoon != 1);
 								if(valikkoon == 1){
-									if(System.getProperty("os.name").contains("Windows")){
-									try{
-										new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
-									}catch(Exception e){}
-								}
-								System.out.println("\033[H\033[2J");
+									tyhjennaNaytto();
 								paaValikko();
 								}
 								break;
@@ -180,8 +159,7 @@ public class Hirsipuu {
     			System.out.println("Virhe, palataan paavalikkoon.");
     			paaValikko();
     		}
-			System.out.println("\033[H\033[2J");
-    	
+			tyhjennaNaytto();
     	}
 
     }
@@ -337,6 +315,14 @@ public class Hirsipuu {
 		}
 		return palautettavaSana;
     }
+	public static void tyhjennaNaytto(){
+		if(System.getProperty("os.name").contains("Windows")){
+				try{
+					new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();  
+				}catch(Exception e){}
+			}
+			System.out.println("\033[H\033[2J");
+	}
 
 }
 
