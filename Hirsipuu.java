@@ -3,6 +3,8 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Hirsipuu {
 	private static final Scanner lukija = new Scanner(System.in);
@@ -318,6 +320,8 @@ public class Hirsipuu {
 			}
 			System.out.println("\033[H\033[2J");
 	}
+	
+	
 
 }
 
