@@ -122,7 +122,8 @@ public class Hirsipuu {
     							System.out.println("Voitit!");
     							try {
     								PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
-    								kirjoittaja.println();
+    								kirjoittaja.println("Oikein arvattu sana: "+sana+" kierroksella: "+kierrosLaskuri);
+    								kirjoittaja.close();
     							} catch (Exception e) {
     								System.out.println("Tuloksia ei voida tallentaa");
     								paaValikko();
