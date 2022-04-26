@@ -28,18 +28,18 @@ public class Hirsipuu {
 			do{
     			valinta = lukija.nextInt();
 			}while(valinta > 4 || valinta < 1);
-    	} catch (Exception e) {
+    	} catch (Exception e) {//Kun syöttää kirjaimia tulostetaan virhe
     		System.out.println("Tarkista etta syotteesi on 1,2,3 tai 4");
     		paaValikko();
   
     	}
-		if (valinta == 1) {
+		if (valinta == 1) {//Siirrytään pelaamaan yksinpeliä
     		yksinPeli();
     	}
-		else if ( valinta == 2) {
+		else if ( valinta == 2) {//Siirrytään pelaamaan pelaaja vs kone
     		pelaajaVsKone();
     	}
-		else if (valinta == 3) {
+		else if (valinta == 3) {//Tulostetaan ohjeet peliä varten
 			int valmis;
     		//ohjeetLuku = tekstitiedosto jossa ohjeet
     		try {
@@ -57,22 +57,22 @@ public class Hirsipuu {
 					tyhjennaNaytto();
     				paaValikko();
     			}
-			}while(valmis != 1);
-    		
+			}while(valmis != 1);//Jos luku ei olekkaan 1
+			//Poistutaan päävalikkkoon
     		}catch (Exception a) {
     			System.out.println("Virhe havaittu poistutaan paavalikkoon");
     			paaValikko();
     		
     		}
-    	} 
-		else if (valinta == 4) {
+	}
+		else if (valinta == 4) {//Peli lopettaa kokonaan
     		System.out.println("Nakemiin");
     	}
     }
     /**
      * Pelaaja pelaa yksin hirsipuuta
      * 
-     * @return void - ei mit��n
+     * @return void - ei mitään
      */
     public static void yksinPeli(){
     	String sana = arvattavaSana(); //maaritetaan kasiteltavaksi sanaksi metodin arvattavaSana() palauttama sana
@@ -303,11 +303,11 @@ public class Hirsipuu {
     	boolean loytyy = false;
     	//toistetaan sana-muuttujan pituuden verran
     	for (int i = 0; i < sana.length(); i++) {
-    		if(sana.charAt(i) == arvattuKirjain) {
+    		if(sana.charAt(i) == arvattuKirjain) {//onko sanan muuttujassa arvattukirjain
     			loytyy = true;
     		}
     	}
-    	return loytyy;
+    	return loytyy;//Palautetaan löytyy
     }
     //Vaihtaa sanaTulosteeseen arvattuKirjain-arvon indekseihin, jossa sana-merkkijonossa loytyy kyseinen merkki 
     public static String paljastaKirjaimet(String sana,String sanaTuloste,char arvattuKirjain){
@@ -332,11 +332,11 @@ public class Hirsipuu {
 	}
 	
 	/**
-	 * Kirjoittaa yksinPelin paattyessa tiedostoon arvatun sanan ja kierrosm��r�n
+	 * Kirjoittaa yksinPelin paattyessa tiedostoon arvatun sanan ja kierrosmäärän
 	 * 
 	 * @param sana
 	 * @param kierrosLaskuri
-	 * @return void - ei mit��n
+	 * @return void - ei mitään
 	 */
 	public static void kirjoitaTulokset(String sana, int kierrosLaskuri) {
 		try {
