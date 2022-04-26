@@ -196,11 +196,11 @@ public class Hirsipuu {
    	 * @exception InputMismatchException Jos pelaajan syote ei ole oikean tyyppinen
    	 */
     public static void pelaajaVsKone(){
-    	String sana = arvattavaSana();
+    	String sana = arvattavaSana(); 
     	String sanaTuloste = "";
     	int kierrosLaskuri = 0;
     	int hirsipuunTila = 0;
-		boolean kaytArvasi = false;
+		boolean kaytArvasi = false; // Arvoksi true, jos kayttaja arvaa sanan oikein
     	for (int i=0; i<sana.length(); i++) {
     			sanaTuloste += "*";
     		}
@@ -229,6 +229,18 @@ public class Hirsipuu {
 					break;
     			}
 			}
+			if(sanaTuloste.equals(sana)) {
+				System.out.println("Arvasit koko sanan");
+				kaytArvasi = true;
+				do{
+					System.out.println("Syota 1 antaaksesi koneelle vuoron");
+					valikkoon = lukija.nextInt();
+				}while(valikkoon != 1);
+				if(valikkoon == 1){
+					tyhjennaNaytto();
+				}
+				break;
+			}
 			if (onkoKirjainSanassa(sana, arvattuKirjain) == true) {
 				System.out.println(sanaTuloste);
 				System.out.println("Oikein, haluatko arvata sanaa? 1) Kylla 2) En");
@@ -240,7 +252,7 @@ public class Hirsipuu {
 						System.out.println("Kirjoita sana: ");
 						lukija.nextLine();
 						sanaArvaus = lukija.nextLine().toLowerCase();
-						if (sanaArvaus.equals(sana)) {
+						if (sanaArvaus.equals(sana)) { // Jos sana arvataan oikein
 							System.out.println("Arvasit!");
 							kaytArvasi = true;
 							do{
@@ -272,8 +284,8 @@ public class Hirsipuu {
 		hirsipuunTila = 0;
 		int kierrosLaskuriKone = 0;
 		int valinta = 0;
+		boolean koneArvasi = false; //Arvoksi true, jos kone arvasi sanan oikein
 		while(hirsipuunTila <= 9){
-			boolean koneArvasi = false;
 			tyhjennaNaytto();
 			hirsipuunTulostus(hirsipuunTila);
 			System.out.println(sanaTuloste);
@@ -340,7 +352,7 @@ public class Hirsipuu {
 		}
 		
 		
-    }
+    }//pelaajaVsKone
     /**
 	 * Hakee ennalta luodusta tekstitiedostosta sanan, jota kaytetaan hirsipuun arvattavana sanana
 	 * @author roope
