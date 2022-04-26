@@ -69,7 +69,11 @@ public class Hirsipuu {
     		System.out.println("Nakemiin");
     	}
     }
-    //Pelaaja pelaa yksin hirsipuuta
+    /**
+     * Pelaaja pelaa yksin hirsipuuta
+     * 
+     * @return void - ei mit‰‰n
+     */
     public static void yksinPeli(){
     	String sana = arvattavaSana();
     	String sanaTuloste = "";
@@ -120,15 +124,7 @@ public class Hirsipuu {
     						sanaArvaus = lukija.nextLine();
     						if (sanaArvaus.equals(sana)) {
     							System.out.println("Voitit!");
-    							try {
-    								PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
-    								kirjoittaja.println("Oikein arvattu sana: "+sana+" kierroksella: "+kierrosLaskuri);
-    								kirjoittaja.close();
-    							} catch (Exception e) {
-    								System.out.println("Tuloksia ei voida tallentaa");
-    								paaValikko();
-									break;
-    							}
+    								kirjoitaTulokset(sana, kierrosLaskuri);
 								do{
 									System.out.println("Syota 1 palataksesi paavalikkoon");
 									valikkoon = lukija.nextInt();
@@ -321,6 +317,24 @@ public class Hirsipuu {
 			}
 			System.out.println("\033[H\033[2J");
 	}
+	
+	/**
+	 * Kirjoittaa yksinPelin paattyessa tiedostoon arvatun sanan ja kierrosm‰‰r‰n
+	 * 
+	 * @param sana
+	 * @param kierrosLaskuri
+	 * @return void - ei mit‰‰n
+	 */
+	public static void kirjoitaTulokset(String sana, int kierrosLaskuri) {
+		try {
+			PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
+			kirjoittaja.println("Oikein arvattu sana: "+sana+" kierroksella: "+kierrosLaskuri);
+			kirjoittaja.close();
+		} catch (Exception e) {
+			System.out.println("Tuloksia ei voida tallentaa");
+			paaValikko();
+		}
+	}//kirjoitaTulokset
 	
 	
 
