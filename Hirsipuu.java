@@ -75,7 +75,7 @@ public class Hirsipuu {
      * @return void - ei mit‰‰n
      */
     public static void yksinPeli(){
-    	String sana = arvattavaSana();
+    	String sana = arvattavaSana(); //m‰‰ritet‰‰n k‰sitelt‰v‰ksi sanaksi metodin arvattavaSana() palauttama sana
     	String sanaTuloste = "";
     	int kierrosLaskuri = 0;
     	int hirsipuunTila = 0;
@@ -156,7 +156,8 @@ public class Hirsipuu {
 			tyhjennaNaytto();
     	}
 
-    }
+    }//yksinPeli
+    
     //Pelaaja ja kone arvaavat vuorotellen
     public static void pelaajaVsKone(){
     }
@@ -327,12 +328,12 @@ public class Hirsipuu {
 	 */
 	public static void kirjoitaTulokset(String sana, int kierrosLaskuri) {
 		try {
-			PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt");
-			kirjoittaja.println("Oikein arvattu sana: "+sana+" kierroksella: "+kierrosLaskuri);
+			PrintWriter kirjoittaja = new PrintWriter("tulosTiedosto.txt"); //luodaan kirjoittaja, mika kirjoittaa tiedostoon "tulosTiedosto.txt"
+			kirjoittaja.println("Oikein arvattu sana: "+sana+" kierroksella: "+kierrosLaskuri); //maaritetaan tiedostoon kirjoitettava teksti
 			kirjoittaja.close();
-		} catch (Exception e) {
-			System.out.println("Tuloksia ei voida tallentaa");
-			paaValikko();
+		} catch (Exception e) { //virheen sattuessa napataan se kiinni
+			System.out.println("Tuloksia ei voida tallentaa"+ e); //tulostus virheen sattuessa
+			paaValikko(); //kutsutaan paaValikko
 		}
 	}//kirjoitaTulokset
 	
