@@ -92,8 +92,7 @@ public class Hirsipuu {
 			int valikkoon = 0;
     		try {
     			sanaTuloste = paljastaKirjaimet(sana, sanaTuloste, arvattuKirjain);
-    			if (onkoKirjainSanassa(sana, arvattuKirjain) == false) { //jos kirjainta ei loydy lisataan kierrosLaskuriin 1 lisaa ja tarkastetaan hirsipuun tila
-    				System.out.println("Kirjainta ei loydy.");
+    			if (onkoKirjainSanassa(sana, arvattuKirjain) == false) { //jos kirjainta ei loydy lisataan hirsipuuhun 1 lisaa ja tarkastetaan hirsipuun tila
     				hirsipuunTila+=1;
         			if (hirsipuunTila == 9) { //Hirsipuun tullessa valmiiksi tulostetaan "Havisit"
 						tyhjennaNaytto();
@@ -110,44 +109,58 @@ public class Hirsipuu {
 						break;
         			}
     			}
-    			if (onkoKirjainSanassa(sana, arvattuKirjain) == true) { //kirjain loytyy sanasta
+
+				if (onkoKirjainSanassa(sana, arvattuKirjain) == true) { //kirjain loytyy sanasta
 					System.out.println(sanaTuloste); //tulostetaan *-merkeilla korvattu sana paljastaen oikein arvattu kirjain
-    				System.out.println("Oikein, haluatko arvata sanaa? 1) Kylla 2) En"); //kysytaan haluaako kayttaja arvata sanan
-    				int arvaatko;
-					String sanaArvaus = "";
-    				try {
-    				do { //kysytaan kayttajalta 1 tai 2 sanan arvaukseen, niin kauan, etta jompikumpi syotetaan
-    					arvaatko = lukija.nextInt(); 
-    					if (arvaatko == 1) { //kayttaja haluaa arvata sanan
-    						System.out.println("Kirjoita sana: "); //kysytaan kayttajalta sana
-							lukija.nextLine();
-    						sanaArvaus = lukija.nextLine(); //sanaArvaus on kayttajan syottama sana
-    						if (sanaArvaus.equals(sana)) { //sanat tasmaa, tulostetaan "Voitit"
-    							System.out.println("Voitit!"); 
-    								kirjoitaTulokset(sana, kierrosLaskuri); //kutsutaan kirjoitaTulokset-metodia, joka kirjoittaa tiedostoon tulokset
-								do{
-									System.out.println("Syota 1 palataksesi paavalikkoon"); //pyydetaan kayttajalta 1 palatakseen paavalikkoon
-									valikkoon = lukija.nextInt();
-								}while(valikkoon != 1); //pyydetaan lukua niin kauan, etta se on 1
-								if(valikkoon == 1){
-									tyhjennaNaytto();
-									paaValikko();
+					
+					if (sanaTuloste.equals(sana)) { //sana on arvattu kokonaan
+						System.out.println("Olet arvannut koko sanan oikein!");
+						kirjoitaTulokset(sana, kierrosLaskuri); //kutsutaan kirjoitaTulokset, joka tallentaa tulokset tiedostoon
+						do{
+							System.out.println("Syota 1 palataksesi paavalikkoon"); //pyydetaan kayttajalta 1 palatakseen paavalikkoon
+							valikkoon = lukija.nextInt();
+						} while(valikkoon != 1); //pyydetaan lukua niin kauan, etta se on 1
+						if(valikkoon == 1){
+							tyhjennaNaytto();
+							paaValikko();
+						}
+					}
+					
+					else { //sana ei ole viela kokonaan arvattu
+						System.out.println("Oikein, haluatko arvata sanaa? 1) Kylla 2) En"); //kysytaan haluaako kayttaja arvata sanan
+						int arvaatko;
+						String sanaArvaus = "";
+						try {
+							do { //kysytaan kayttajalta 1 tai 2 sanan arvaukseen, niin kauan, etta jompikumpi syotetaan
+								arvaatko = lukija.nextInt(); 
+								if (arvaatko == 1) { //kayttaja haluaa arvata sanan
+									System.out.println("Kirjoita sana: "); //kysytaan kayttajalta sana
+									lukija.nextLine();
+									sanaArvaus = lukija.nextLine(); //sanaArvaus on kayttajan syottama sana
+									if (sanaArvaus.equals(sana)) { //sanat tasmaa, tulostetaan "Voitit"
+										System.out.println("Voitit!"); 
+										kirjoitaTulokset(sana, kierrosLaskuri); //kutsutaan kirjoitaTulokset-metodia, joka kirjoittaa tiedostoon tulokset
+										do{
+											System.out.println("Syota 1 palataksesi paavalikkoon"); //pyydetaan kayttajalta 1 palatakseen paavalikkoon
+											valikkoon = lukija.nextInt();
+										} while(valikkoon != 1); //pyydetaan lukua niin kauan, etta se on 1
+										if(valikkoon == 1){
+											tyhjennaNaytto();
+											paaValikko();
+										}
+										break;
+									}
 								}
-								break;
-    						}
-    					}
-    					if (arvaatko == 2) { //kayttaja ei halua arvata sanaa, joten jatketaan eteenpain
-    						break;
-    					}
-    					if (sanaTuloste.equals(sana)) {
-    						break;
-    					}
-    				} while (arvaatko != 1  && arvaatko != 2);
-    				} catch (Exception e) { //napataan virhe, mika tapahtuu sanan arvauksessa
-    					System.out.println("Syotteessa havaittu virhe");
-    					paaValikko();
-    				}
-    			}
+								if (arvaatko == 2) { //kayttaja ei halua arvata sanaa, joten jatketaan eteenpain
+									break;
+								}
+							} while (arvaatko != 1  && arvaatko != 2);
+						} catch (Exception e) { //napataan virhe, mika tapahtuu sanan arvauksessa
+							System.out.println("Syotteessa havaittu virhe");
+							paaValikko();
+						}
+					}
+				}
     		} catch (Exception e) { //napataan virhe, mika tapahtuu kirjaimen arvauksessa
     			System.out.println("Virhe, palataan paavalikkoon.");
     			paaValikko();
