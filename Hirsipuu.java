@@ -139,7 +139,7 @@ public class Hirsipuu {
     					if (arvaatko == 2) { //kayttaja ei halua arvata sanaa, joten jatketaan eteenpain
     						break;
     					}
-    					if (sanaArvaus.equals(sana)) {
+    					if (sanaTuloste.equals(sana)) {
     						break;
     					}
     				} while (arvaatko != 1  && arvaatko != 2);
