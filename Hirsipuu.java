@@ -6,16 +6,32 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * Sisaltaa pelattavan hirsipuu-pelin
+ * @author jenny
+ * @author nanna
+ * @author roope
+ */
 public class Hirsipuu {
+	/**
+	 * Sisaltaa pelaajan syotteen pyytamiseen tarvittavat metodit
+	 */
 	private static final Scanner lukija = new Scanner(System.in);
 	
-    //Kaynnistaa paaValikko-metodin
-    public static void main(String args[]){
+	/**
+	 * Aloittaa hirsipuun kutsumalla paaValikko()-metodia, joka toimii Hirsipuun ohjausmetodina
+	 */
+	public static void main(String args[]){
     	paaValikko();
     	
     }
-    //Antaa kayttajan valita yksinPeli- ja pelaajaVsKone-metodin, ohjeiden ja lopetuksen valilla
-    public static void paaValikko(){
+	/**
+	 * Antaa pelaajan valita pelaako han yksin vai konetta vastaan, lukeeko han kayttoohjeet vai poistuuko han pelista
+	 * @exception InputMismatchException Jos annettu syote ei ole kokonaisluku
+	 * @author jenny
+	 */
+	public static void paaValikko(){
 		tyhjennaNaytto();
     	int valinta = 0;
     	try {
@@ -28,18 +44,18 @@ public class Hirsipuu {
 			do{
     			valinta = lukija.nextInt();
 			}while(valinta > 4 || valinta < 1);
-    	} catch (Exception e) {
+    	} catch (Exception e) {//Kun syottaa kirjaimia tulostetaan virhe
     		System.out.println("Tarkista etta syotteesi on 1,2,3 tai 4");
     		paaValikko();
   
     	}
-		if (valinta == 1) {
+		if (valinta == 1) {//Siirrytaan pelaamaan yksinpelia
     		yksinPeli();
     	}
-		else if ( valinta == 2) {
+		else if ( valinta == 2) {//Siirrytaan pelaamaan pelaaja vs kone
     		pelaajaVsKone();
     	}
-		else if (valinta == 3) {
+		else if (valinta == 3) {//Tulostetaan ohjeet pelia varten
 			int valmis;
     		//ohjeetLuku = tekstitiedosto jossa ohjeet
     		try {
@@ -57,22 +73,23 @@ public class Hirsipuu {
 					tyhjennaNaytto();
     				paaValikko();
     			}
-			}while(valmis != 1);
-    		
+			}while(valmis != 1);//Jos luku ei olekkaan 1
+			//Poistutaan paavalikkkoon
     		}catch (Exception a) {
     			System.out.println("Virhe havaittu poistutaan paavalikkoon");
     			paaValikko();
     		
     		}
-    	} 
-		else if (valinta == 4) {
+	}
+		else if (valinta == 4) {//Peli lopettaa kokonaan
     		System.out.println("Nakemiin");
     	}
     }
-    /**
+	/**
      * Pelaaja pelaa yksin hirsipuuta
      * 
      * @return void - ei mitään
+     *@author Nanna
      */
     public static void yksinPeli(){
     	String sana = arvattavaSana(); //maaritetaan kasiteltavaksi sanaksi metodin arvattavaSana() palauttama sana
@@ -103,8 +120,8 @@ public class Hirsipuu {
 							valikkoon = lukija.nextInt();
 						}while(valikkoon != 1);
 						if(valikkoon == 1){
-							tyhjennaNaytto();
 							paaValikko();
+							break;
 						}
 						break;
         			}
@@ -123,6 +140,7 @@ public class Hirsipuu {
 						if(valikkoon == 1){
 							tyhjennaNaytto();
 							paaValikko();
+							break;
 						}
 					}
 					
@@ -145,8 +163,8 @@ public class Hirsipuu {
 											valikkoon = lukija.nextInt();
 										} while(valikkoon != 1); //pyydetaan lukua niin kauan, etta se on 1
 										if(valikkoon == 1){
-											tyhjennaNaytto();
 											paaValikko();
+											break;
 										}
 										break;
 									}
@@ -159,6 +177,9 @@ public class Hirsipuu {
 							System.out.println("Syotteessa havaittu virhe");
 							paaValikko();
 						}
+						if(valikkoon == 1) {
+							break;
+						}
 					}
 				}
     		} catch (Exception e) { //napataan virhe, mika tapahtuu kirjaimen arvauksessa
@@ -170,10 +191,175 @@ public class Hirsipuu {
 
     }//yksinPeli
     
-    //Pelaaja ja kone arvaavat vuorotellen
+    /**
+   	 * Suorittaa pelaajan ja koneen valisen hirsipuun pelaamisen.
+   	 * @author roope 
+   	 * @exception InputMismatchException Jos pelaajan syote ei ole oikean tyyppinen
+   	 */
     public static void pelaajaVsKone(){
-    }
-    //Hakee tiedostosta arvattavan sanan ja palauttaa sen
+    	String sana = arvattavaSana(); 
+    	String sanaTuloste = "";
+    	int kierrosLaskuri = 0;
+    	int hirsipuunTila = 0;
+		boolean kaytArvasi = false; // Arvoksi true, jos kayttaja arvaa sanan oikein
+    	for (int i=0; i<sana.length(); i++) {
+    			sanaTuloste += "*";
+    		}
+    	while(hirsipuunTila <= 9) {
+			tyhjennaNaytto();
+    		hirsipuunTulostus(hirsipuunTila);
+    		kierrosLaskuri += 1;
+    		System.out.println(sanaTuloste);
+    		System.out.println("Arvaa kirjain: ");
+    		char arvattuKirjain =Character.toLowerCase(lukija.next().charAt(0));
+			int valikkoon = 0;
+			sanaTuloste = paljastaKirjaimet(sana, sanaTuloste, arvattuKirjain);
+			if (onkoKirjainSanassa(sana, arvattuKirjain) == false) {
+				hirsipuunTila+=1;
+    			if (hirsipuunTila == 9) {
+					tyhjennaNaytto();
+					hirsipuunTulostus(hirsipuunTila);
+					System.out.println("Havisit!");
+					do{
+						System.out.println("Syota 1 antaaksesi koneelle vuoron: ");
+						valikkoon = lukija.nextInt();
+					}while(valikkoon != 1);
+					if(valikkoon == 1){
+						tyhjennaNaytto();
+					}
+					break;
+    			}
+			}
+			if(sanaTuloste.equals(sana)) {
+				System.out.println("Arvasit koko sanan");
+				kaytArvasi = true;
+				do{
+					System.out.println("Syota 1 antaaksesi koneelle vuoron");
+					valikkoon = lukija.nextInt();
+				}while(valikkoon != 1);
+				if(valikkoon == 1){
+					tyhjennaNaytto();
+				}
+				break;
+			}
+			if (onkoKirjainSanassa(sana, arvattuKirjain) == true) {
+				System.out.println(sanaTuloste);
+				System.out.println("Oikein, haluatko arvata sanaa? 1) Kylla 2) En");
+				int arvaatko;
+				String sanaArvaus = "";
+				do {
+					arvaatko = lukija.nextInt();
+					if (arvaatko == 1) {
+						System.out.println("Kirjoita sana: ");
+						lukija.nextLine();
+						sanaArvaus = lukija.nextLine().toLowerCase();
+						if (sanaArvaus.equals(sana)) { // Jos sana arvataan oikein
+							System.out.println("Arvasit!");
+							kaytArvasi = true;
+							do{
+								System.out.println("Syota 1 antaaksesi koneelle vuoron");
+								valikkoon = lukija.nextInt();
+							}while(valikkoon != 1);
+							if(valikkoon == 1){
+								tyhjennaNaytto();
+							}
+							break;
+						}
+						
+					}
+					if (arvaatko == 2) {
+						break;
+					}
+				} while (arvaatko != 1  && arvaatko != 2);
+				if (sanaArvaus.equals(sana)) {
+							break;
+				}
+			}
+			tyhjennaNaytto();
+    	}
+
+		sanaTuloste = "";
+		for (int i=0; i<sana.length(); i++) {
+    			sanaTuloste += "*";
+    		}
+		hirsipuunTila = 0;
+		int kierrosLaskuriKone = 0;
+		int valinta = 0;
+		boolean koneArvasi = false; //Arvoksi true, jos kone arvasi sanan oikein
+		while(hirsipuunTila <= 9){
+			tyhjennaNaytto();
+			hirsipuunTulostus(hirsipuunTila);
+			System.out.println(sanaTuloste);
+			kierrosLaskuriKone = kierrosLaskuriKone + 1;
+			char koneenArvaamaKirjain = koneArvaaKirjaimen();
+			if(onkoKirjainSanassa(sana,koneenArvaamaKirjain)){
+				sanaTuloste = paljastaKirjaimet(sana,sanaTuloste,koneenArvaamaKirjain);
+			}
+			else if(onkoKirjainSanassa(sana,koneenArvaamaKirjain) == false){
+				hirsipuunTila = hirsipuunTila + 1;
+			}
+			System.out.println("Kone arvasi kirjainta "+koneenArvaamaKirjain);
+			do{
+				System.out.println("Syota 1 jatkaaksesi");
+				valinta = lukija.nextInt();
+			}while(valinta != 1);
+			int arvattaviaJaljella = 0;
+			for(int i = 0;i < sanaTuloste.length();i++){
+				if(sanaTuloste.charAt(i)=='*'){
+					arvattaviaJaljella = arvattaviaJaljella + 1;
+				}
+			}
+			String koneenArvaus = koneArvaaSanaa(sanaTuloste);
+			if(arvattaviaJaljella <= 3){
+				if(sana.equals(koneenArvaus)){
+					valinta = 0;
+					System.out.println(sanaTuloste);
+					System.out.println("Kone arvasi sanan:"+ sana);
+					koneArvasi = true;
+					if(koneArvasi && kaytArvasi){
+						System.out.println("Tasapeli");
+					}
+					else if(koneArvasi && !(kaytArvasi)){
+						System.out.println("Kone voitti");
+					}
+					do{
+						System.out.println("Syota 1 jatkaaksesi");
+						valinta = lukija.nextInt();
+					}while(valinta != 1);
+					paaValikko();
+					break;
+				}
+			}
+			if(hirsipuunTila == 9){
+				hirsipuunTulostus(hirsipuunTila);
+				System.out.println("Kone ei arvannut sanaa");
+				if(!koneArvasi && kaytArvasi){
+					if(kierrosLaskuri < kierrosLaskuriKone){
+						System.out.println("Pelaaja voitti");
+					}
+					else if(!koneArvasi && !kaytArvasi){
+						System.out.println("Tasapeli");
+					}
+				}
+				valinta = 0;
+				do{
+					System.out.println("Syota 1 jatkaaksesi");
+					valinta = lukija.nextInt();
+				}while(valinta != 1);
+				paaValikko();
+				break;
+			}
+			
+		}
+		
+		
+    }//pelaajaVsKone
+    /**
+	 * Hakee ennalta luodusta tekstitiedostosta sanan, jota kaytetaan hirsipuun arvattavana sanana
+	 * @author roope
+	 * @return String
+	 *  
+	 */
     public static String arvattavaSana(){
 		//lisaa loput sanat ja muuta for-loopin ehto oikeaksi
 		String sana = "";
@@ -197,7 +383,11 @@ public class Hirsipuu {
 		lukija.close();
 		return sana;
 	}
-    //Tulostaa annetun luvun mukaan hirsipuun tilan
+    /**
+	 * Tulostaa ruudun ja hirsipuun ruudun sisaan kayttaen parametrina lukua 0-9. Suurempi luku on valmiimpi hirsipuu
+	 * @author roope
+	 * @param hirsipuunTila Luku, joka maarittaa mika vaihe hirsipuusta tulostetaan
+	 */
     public static void hirsipuunTulostus(int hirsipuunTila){
 		if(hirsipuunTila == 0) {
     		System.out.println("_______________");
@@ -298,18 +488,31 @@ public class Hirsipuu {
     		System.out.println("_______________");
     	}
     }
-    //Palauttaa boolean arvon sen mukaan onko arvattuKirjain sanassa
+    /**
+   	 * Palauttaa true, jos toisena parametrina annettu kirjain loytyy ensimmaisen parametrin sanasta
+   	 * @author jenny
+   	 * @return boolean
+   	 * @param sana Sana, josta arvattuaKirjainta etsitaan
+   	 * @param arvattuKirjain Kirjain, jota etsitaan sanasta
+   	 */
     public static boolean onkoKirjainSanassa(String sana,char arvattuKirjain){
     	boolean loytyy = false;
     	//toistetaan sana-muuttujan pituuden verran
     	for (int i = 0; i < sana.length(); i++) {
-    		if(sana.charAt(i) == arvattuKirjain) {
+    		if(sana.charAt(i) == arvattuKirjain) {//onko sanan muuttujassa arvattukirjain
     			loytyy = true;
     		}
     	}
-    	return loytyy;
+    	return loytyy;//Palautetaan loytyy
     }
-    //Vaihtaa sanaTulosteeseen arvattuKirjain-arvon indekseihin, jossa sana-merkkijonossa loytyy kyseinen merkki 
+    /**
+	 * Palauttaa sanaTulosteen, joka on muodossa ****** muokattuna siten, etta sanaTulostetta verrataan parametrina annettuun sanaan ja jos sanasta loytyy annettu kirjain, sanaTulosteen samoista indekseista * vaihdetaan oikeiksei kirjaimiksi
+	 * @author roope
+	 * @return String
+	 * @param sana Sana, jonka mukaan kirjain vaihdetaan sanaTulosteesta
+	 * @param sanaTuloste Versio sanasta, joka on peitetty muotoon ******
+	 * @param arvattuKirjain Kirjain, jota vaihdetaan sanaTulosteen oikeasta indeksista
+	 */
     public static String paljastaKirjaimet(String sana,String sanaTuloste,char arvattuKirjain){
 		String palautettavaSana = "";
 		for(int i = 0;i < sana.length();i++) {
@@ -322,6 +525,10 @@ public class Hirsipuu {
 		}
 		return palautettavaSana;
     }
+    /**
+     * Tyhjentaa komentolinjan sisaltoa, kun siihen tarvetta
+     * @author roope
+     */
 	public static void tyhjennaNaytto(){
 		if(System.getProperty("os.name").contains("Windows")){
 				try{
@@ -332,11 +539,12 @@ public class Hirsipuu {
 	}
 	
 	/**
-	 * Kirjoittaa yksinPelin paattyessa tiedostoon arvatun sanan ja kierrosmäärän
+	 * Kirjoittaa yksinPelin paattyessa tiedostoon arvatun sanan ja kierrosmaaran
 	 * 
 	 * @param sana
 	 * @param kierrosLaskuri
-	 * @return void - ei mitään
+	 * @return void - ei mitaan
+	 * @author Nanna
 	 */
 	public static void kirjoitaTulokset(String sana, int kierrosLaskuri) {
 		try {
@@ -349,6 +557,63 @@ public class Hirsipuu {
 		}
 	}//kirjoitaTulokset
 	
+	/**
+	 * Metodi palauttaa satunnaisen kirjaimen kirjainLista-taulukosta
+	 * @author roope
+	 * @return char
+	 */
+	public static char koneArvaaKirjaimen(){
+		char arvattuKirjain;
+		Random randomLuku = new Random();
+		char [] kirjainLista = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','y','v','x','y','z'};
+		boolean joArvattu = true;
+		int randomIndeksi = randomLuku.nextInt(kirjainLista.length);
+		arvattuKirjain = kirjainLista[randomIndeksi];
+		return arvattuKirjain;
+	}
+	/**
+	 * Palauttaa satunnaisen sanan sanatiedostosta, joka vastaa sanaTulosteen kaavaa.
+	 * @author roope
+	 * @return String
+	 * @param sanaTuloste Merkkijono muodossa av*b*b
+	 */
+	public static String koneArvaaSanaa(String sanaTuloste){
+		String arvattavaSana = "";
+		String kaava = "";
+		Random randomi = new Random();
+		for(int i = 0;i<sanaTuloste.length();i++){
+			if(sanaTuloste.charAt(i)!='*'){
+				kaava = kaava + sanaTuloste.charAt(i);
+			}
+			else{
+				kaava = kaava + '.';
+			}
+		}
+		String [] mahdollisetSanat = new String[41];
+		Pattern etsittava = Pattern.compile(kaava);
+		Matcher etsija;
+		int seuraavaIndeksi = 0;
+		Scanner lukija = new Scanner("");
+		try {
+			File Sanatiedosto = new File("sanalista.txt");
+			lukija = new Scanner(Sanatiedosto);
+		}catch(FileNotFoundException f){
+			System.out.println("Sanatiedostoa ei loydy.");
+			paaValikko();
+		}
+		while(lukija.hasNext()){
+			String sanaListasta = lukija.next();
+			etsija = etsittava.matcher(sanaListasta);
+			if(etsija.matches()){
+				mahdollisetSanat[seuraavaIndeksi]=sanaListasta;
+				seuraavaIndeksi = seuraavaIndeksi + 1;
+			}
+		}
+		int randomNumero = randomi.nextInt(seuraavaIndeksi + 1);
+		arvattavaSana = mahdollisetSanat[randomNumero];
+		lukija.close();
+		return arvattavaSana;
+	}
 	
 
 }

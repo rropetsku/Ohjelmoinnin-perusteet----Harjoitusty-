@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Oikein arvattu sana: uutinen kierroksella: 8
+=======
+Oikein arvattu sana: kyltti kierroksella: 12
+>>>>>>> 458999092db8cb59060d7e636d3bcd3417a99a4d
